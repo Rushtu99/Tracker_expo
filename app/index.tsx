@@ -1,22 +1,23 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { Link } from 'expo-router';
-// import Dashboard from './(tabs)/index'
+import { View, Text } from "react-native";
+import React from "react";
+import { Link } from "expo-router";
+import { useAppSelector, useAppDispatch } from "@/components/store/hooks";
 import "../global.css";
-const index = () => {
-  return (
-    <View className='bg-blue-500 flex h-full justify-center'>
-        {/* <Dashboard /> */}
-        <Text className='text-center text-4xl font-bold'>ENTRYYYY POINT</Text>
-      {/* <Link href = "./(tabs)">Go to Dashbaord</Link> */}
-    </View>
-  )
-}
 
-export default index
+const Index = () => {
+    const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+    const dispatch = useAppDispatch();
 
-const styles = StyleSheet.create({
-    container:{
-        //backgroundColor: "red"
-    }
-})
+    return (
+        <View className="bg-bg h-full justify-center items-center gap-5">
+            <Text className="text-text text-xl font-extrabold">ROOT</Text>
+            <Text className="text-secondary text-xl font-bold">App in Progress.....</Text>
+            <Link className="text-text text-lg" href="/(tabs)/dashboard">
+                {" "}
+                to homePage{" "}
+            </Link>
+        </View>
+    );
+};
+
+export default Index;
