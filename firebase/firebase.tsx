@@ -4,19 +4,20 @@ import { Platform } from "react-native";
 import { initializeApp as initializeWebApp } from "firebase/app";
 import { getAuth as getWebAuth } from "firebase/auth";
 import { getFirestore as getWebFirestore } from "firebase/firestore";
-
 // React Native Firebase
 import firebase from "@react-native-firebase/app";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
+    apiKey: "AIzaSyBEPoVZNV8CY2hUWlZ6GOQIBJwr6fLtw-Y",
+    authDomain: "tracker-ed31c.firebaseapp.com",
+    databaseURL: "https://tracker-ed31c-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "tracker-ed31c",
+    storageBucket: "tracker-ed31c.firebasestorage.app",
+    messagingSenderId: "896482902386",
+    appId: "1:896482902386:web:9b67839c01c236c7435deb",
+    measurementId: "G-059G706Z4P",
 };
 
 let app, authInstance, firestoreInstance;
@@ -37,5 +38,4 @@ if (Platform.OS === "web") {
     authInstance = auth();
     firestoreInstance = firestore();
 }
-
 export { app, authInstance as auth, firestoreInstance as firestore };

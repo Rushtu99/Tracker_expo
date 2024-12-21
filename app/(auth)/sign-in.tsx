@@ -1,17 +1,36 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Formfield, { CustomButton } from "@/components/custom/Formfield";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useDispatch } from "react-redux";
-import { setUser } from "@/components/store/slices/authSlice";
+import { setUser } from "@/store/slices/authSlice";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase/firebase";
+import { signIn } from "@/firebase/authLib";
 
 const SignIn = () => {
-    const dispatch = useDispatch();
     const [form, setForm] = useState({ email: "", password: "" });
-    let handleClick = () => {
-        dispatch(setUser(form.email));
-        console.log("submit and redirect", form.email);
+    const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
+    const handleClick = async () => {
+        try {
+            setLoading(true);
+            if (form.email && form.password) {
+                const res = await signIn(form.email, form.password);
+                //    const response = await signInWithEmailAndPassword(auth,form.email,form.password)
+                //    console.log(response.user)
+                console.log(res);
+                dispatch(setUser(res));
+                // router.replace('../(tabs)/dashboard')
+            }
+            setLoading(false);
+        } catch (err) {
+            console.log(err);
+            Alert.alert("SOMETHING WRONGG", err);
+            setLoading(false);
+        }
     };
     return (
         <SafeAreaView className="bg-bg h-full ">
@@ -38,7 +57,7 @@ const SignIn = () => {
                         keyboardType="password"
                         placeholder="Enter your password"
                     />
-                    <CustomButton styles="bg-primary " handlePress={handleClick} />
+                    {loading ? <ActivityIndicator /> : <CustomButton styles="bg-primary " handlePress={handleClick} />}
                     <View className=" flex-row rounded-md border-zinc-100 bg-bgmid text-center">
                         <Text className="text-lg text-textlight">{"Dont have an Account?  "}</Text>
                         <Link className="text-lg text-primary" href="./sign-up">

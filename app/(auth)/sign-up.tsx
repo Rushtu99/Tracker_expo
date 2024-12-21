@@ -1,21 +1,37 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Formfield, { CustomButton } from "@/components/custom/Formfield";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { createUser, signIn } from "../../firebase/authLib";
+import { useDispatch } from "react-redux";
+
 const SignIn = () => {
     const [form, setForm] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
     const handleClick = async () => {
-        if (form.email && form.password) {
-            console.log("GOP TO MAIN, profile createdd");
+        try {
+            setLoading(true);
+            if(form.email && form.password){
+                await createUser(form.email,form.password)
+                const res = await signIn(form.email,form.password)
+                console.log("create user: ",res)
+                router.replace("../(tabs)/dashboard");
+            }
+            setLoading(false);
+        } catch (err) {
+            console.log(err);
+            Alert.alert("SOMETHING WRONGG", err);
+            setLoading(false);
         }
-        console.log("submit and redirect", form);
     };
 
     return (
         <SafeAreaView className="bg-bg h-full ">
             <ScrollView className="flex justify-center">
-                <View className="flex-col border border-border rounded-md md:container mx-auto h-full p-6 my-4 gap-10">
+                <View className="flex-col border border-border rounded-md sm:container mx-auto h-full p-6 my-4 gap-10">
                     <Text className=" text-2xl text-text">SIGN UP</Text>
                     <Formfield
                         title="Email"
@@ -37,11 +53,11 @@ const SignIn = () => {
                         keyboardType="password"
                         placeholder="Enter your password"
                     />
-                    <CustomButton styles="bg-primary " handlePress={handleClick} />
+                    {loading ? <ActivityIndicator /> : <CustomButton styles="bg-primary " handlePress={handleClick} />}
                     <View className=" flex-row rounded-md border-zinc-100 bg-bgmid text-center">
                         <Text className="text-lg text-textlight">{"Already have an Account?  "}</Text>
-                        <Link className="text-lg text-primary" href="./sign-in">
-                            SIGN IN
+                        <Link href="./sign-in">
+                            <Text className="text-lg text-primary">SIGN IN</Text>
                         </Link>
                     </View>
                 </View>

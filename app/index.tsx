@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
-import { useAppSelector, useAppDispatch } from "@/components/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import "../global.css";
 
 const Index = () => {

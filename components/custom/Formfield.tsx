@@ -45,8 +45,8 @@ const Formfield = ({ title, value, placeholder, handleChange, type }) => {
 
 export const CustomButton = ({ title, handlePress, styles = "" }) => {
     return (
-        <View className={`${styles} rounded-md w-1/4 justify-center font-medium text-center p-3`}>
-            <TouchableOpacity onPress={handlePress}>{title ? title : "Submit"}</TouchableOpacity>
+        <View className={`${styles} rounded-md w-1/4 justify-center p-3`}>
+            <TouchableOpacity onPress={handlePress}><Text className=" font-medium text-lg text-center">{title ? title : "Submit"}</Text></TouchableOpacity>
         </View>
     );
 };
