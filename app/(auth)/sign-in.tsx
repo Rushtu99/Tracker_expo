@@ -7,16 +7,16 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/components/store/slices/authSlice";
 
 const SignIn = () => {
-    const dispatch  = useDispatch()
+    const dispatch = useDispatch();
     const [form, setForm] = useState({ email: "", password: "" });
     let handleClick = () => {
-        dispatch(setUser(form.email))
+        dispatch(setUser(form.email));
         console.log("submit and redirect", form.email);
     };
     return (
         <SafeAreaView className="bg-bg h-full ">
             <ScrollView className="flex justify-center">
-                <View className="flex-col border border-border rounded-md md:container mx-auto h-full p-6 my-4 gap-10">
+                <View className="flex-col border border-border rounded-md sm:container h-full p-6 mx-auto my-4 gap-10">
                     <Text className=" text-2xl text-text">SIGN IN</Text>
                     <Formfield
                         title="Email"

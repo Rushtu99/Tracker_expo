@@ -2,7 +2,7 @@
 
 # dependencies
 node_modules/
-
+*.env
 # Expo
 .expo/
 dist/
@@ -35,4 +35,7 @@ android
 # typescript
 *.tsbuildinfo
 
-app-example
+
+GoogleService-Info.plist
+google-services.json
+nativewind-env.d.ts

@@ -5,7 +5,7 @@
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
-        "scheme": "myapp",
+        "scheme": "your-scheme",
         "userInterfaceStyle": "automatic",
         "newArchEnabled": true,
         "ios": {
@@ -29,7 +29,7 @@
         "plugins": [
             "expo-router",
             "@react-native-firebase/app",
-            "@react-native-google-signin/google-signin",
+            "@react-native-firebase/auth",
             [
                 "expo-splash-screen",
                 {
@@ -42,6 +42,14 @@
         ],
         "experiments": {
             "typedRoutes": true
+        },
+        "extra": {
+            "router": {
+                "origin": false
+            },
+            "eas": {
+                "projectId": "34443efb-15f2-41a1-b440-69d314bb5b26"
+            }
         }
     }
 }

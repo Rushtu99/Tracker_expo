@@ -3,20 +3,11 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Formfield, { CustomButton } from "@/components/custom/Formfield";
 import { Link } from "expo-router";
-import { auth } from "react-native-firebase";
 const SignIn = () => {
     const [form, setForm] = useState({ email: "", password: "" });
-
-    const createProfile = async(res: FirebaseAuthTypes.UserCredential) => {
-        db().ref(`/users/${res.user.uid}`).set({name});
-    }
     const handleClick = async () => {
-        if(form.email && form.password){
-            const res = await auth.createUserWithEmailAndPassword(form.email,form.password)
-            if(res.user){
-                await createProfile(res);
-                console.log("GOP TO MAIN, profile createdd")
-            }
+        if (form.email && form.password) {
+            console.log("GOP TO MAIN, profile createdd");
         }
         console.log("submit and redirect", form);
     };

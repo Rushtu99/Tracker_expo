@@ -39,7 +39,6 @@ let colors = tailwindConfig.theme.extend.colors;
 export function IconSymbol({ name, size = 24, color = "primary", style, type = "MaterialIcons" }: IconSymbolProps) {
     let c = colors[color] || color;
 
-    console.log(c, color);
     if (type === "AntDesign") return <AntDesign color={c} size={size} name={name as any} style={style} />;
     if (type === "FontAwesome") return <FontAwesome color={c} size={size} name={name as any} style={style} />;
     if (type === "Ionicons") return <Ionicons color={c} size={size} name={name as any} style={style} />;
