@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Formfield, { CustomButton } from "@/components/custom/Formfield";
 import { Link, router } from "expo-router";
-import { createUser, signIn } from "../../firebase/authLib";
+import { createUser, signIn } from "../../firebase/library";
 import { useDispatch } from "react-redux";
 
 const SignIn = () => {
@@ -14,16 +14,14 @@ const SignIn = () => {
     const handleClick = async () => {
         try {
             setLoading(true);
-            if(form.email && form.password){
-                await createUser(form.email,form.password)
-                const res = await signIn(form.email,form.password)
-                console.log("create user: ",res)
+            if (form.email && form.password) {
+                await createUser(form.email, form.password);
+                const res = await signIn(form.email, form.password);
                 router.replace("../(tabs)/dashboard");
             }
-            setLoading(false);
         } catch (err) {
             console.log(err);
-            Alert.alert("SOMETHING WRONGG", err);
+        } finally {
             setLoading(false);
         }
     };

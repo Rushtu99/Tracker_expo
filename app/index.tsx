@@ -7,7 +7,7 @@ import "../global.css";
 const Index = () => {
     const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
     const dispatch = useAppDispatch();
-
+    console.log("aaaa",isAuthenticated)
     return (
         <View className="bg-bg h-full justify-center items-center gap-5">
             <Text className="text-text text-xl font-extrabold">ROOT</Text>

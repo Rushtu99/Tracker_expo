@@ -2,12 +2,14 @@ import { Platform } from "react-native";
 
 // Browser Firebase (Firebase JS SDK)
 import { initializeApp as initializeWebApp } from "firebase/app";
-import { getAuth as getWebAuth } from "firebase/auth";
+import { initializeAuth as initalizeWebAuth } from "firebase/auth";
+import { getReactNativePersistence } from "@firebase/auth/dist/rn/index.js";
 import { getFirestore as getWebFirestore } from "firebase/firestore";
 // React Native Firebase
 import firebase from "@react-native-firebase/app";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBEPoVZNV8CY2hUWlZ6GOQIBJwr6fLtw-Y",
@@ -22,20 +24,25 @@ const firebaseConfig = {
 
 let app, authInstance, firestoreInstance;
 console.log(Platform.OS, "platform from react-native");
-
-if (Platform.OS === "web") {
-    // Initialize for web
-    app = initializeWebApp(firebaseConfig);
-    authInstance = getWebAuth(app);
-    firestoreInstance = getWebFirestore(app);
-} else {
-    // Initialize for React Native
-    if (!firebase.apps.length) {
-        app = firebase.initializeApp(firebaseConfig);
+try {
+    if (Platform.OS === "web") {
+        // Initialize for web
+        app = initializeWebApp(firebaseConfig);
+        authInstance = initalizeWebAuth(app, {
+            persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+        });
+        firestoreInstance = getWebFirestore(app);
     } else {
-        app = firebase.app();
+        // Initialize for React Native
+        if (!firebase.apps.length) {
+            app = firebase.initializeApp(firebaseConfig);
+        } else {
+            app = firebase.app();
+        }
+        authInstance = auth();
+        firestoreInstance = firestore();
     }
-    authInstance = auth();
-    firestoreInstance = firestore();
+} catch (err) {
+    console.log("ERR in FIREBASE: ", err);
 }
 export { app, authInstance as auth, firestoreInstance as firestore };

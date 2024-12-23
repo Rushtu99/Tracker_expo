@@ -6,29 +6,27 @@ import { Link, router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/slices/authSlice";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase/firebase";
-import { signIn } from "@/firebase/authLib";
+import { auth } from "@/firebase/config";
+import { signIn } from "@/firebase/library";
 
 const SignIn = () => {
     const [form, setForm] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
-
+    // console.log(handleSignIn)
     const dispatch = useDispatch();
     const handleClick = async () => {
         try {
             setLoading(true);
             if (form.email && form.password) {
                 const res = await signIn(form.email, form.password);
-                //    const response = await signInWithEmailAndPassword(auth,form.email,form.password)
-                //    console.log(response.user)
                 console.log(res);
                 dispatch(setUser(res));
-                // router.replace('../(tabs)/dashboard')
+                router.replace("/dashboard")
             }
-            setLoading(false);
         } catch (err) {
             console.log(err);
             Alert.alert("SOMETHING WRONGG", err);
+        } finally {
             setLoading(false);
         }
     };
